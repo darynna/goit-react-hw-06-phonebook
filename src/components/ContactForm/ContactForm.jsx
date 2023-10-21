@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import {Form, Label, Input, AddButton} from './ContactForm.styled'
 import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { addContacts} from 'redux/reducer';
 
-export const ContactForm =({handleAddContacts})=> {
+export const ContactForm =()=> {
 
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
@@ -21,6 +25,20 @@ export const ContactForm =({handleAddContacts})=> {
         return  
     }
   }
+
+  const contacts = useSelector(getContacts) 
+  const dispatch = useDispatch()
+
+  const handleAddContacts = newContact => {
+    const hasContactDuplicate = contacts.some(
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+    );
+    if (hasContactDuplicate) {
+      Notify.failure(`${newContact.name} is already in your contacts`);
+      return;
+    }
+    dispatch(addContacts(newContact))
+  };
 
   const handleSubmision = (e) =>{
     e.preventDefault();
