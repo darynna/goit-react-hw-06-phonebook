@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { phonebookReducer } from './reducer';
-
 const phonebookInitialState = {
     contacts: [
           { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
