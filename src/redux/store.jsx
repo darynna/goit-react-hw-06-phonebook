@@ -14,7 +14,6 @@ export const store = configureStore({
   reducer: {
     phonebook: persistedReducer,
   },
-  blacklist: ['filter'],
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
